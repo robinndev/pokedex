@@ -1,8 +1,8 @@
 import { TextInput } from "react-native"
 import { styles } from "./styles"
 
-export const InputSearch = () => {
+export const InputSearch = (props) => {
     return (
-        <TextInput style={styles.search} placeholder={'Please type here…'}/>
+        <TextInput onChangeText={props.onChangeText} style={styles.search} placeholder={'Please type here…'}/>
     )
 }

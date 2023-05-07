@@ -5,7 +5,6 @@ import lightTheme from "../../theme/lightTheme";
 export const styles = StyleSheet.create({
     container: {
         width: "100%",
-        // backgroundColor: "pink",
         height: 120,
         justifyContent: "space-between",
         alignItems: "center",
@@ -28,7 +27,7 @@ export const styles = StyleSheet.create({
     },
 
     tagAtributes: {
-        backgroundColor: "green",
+        // backgroundColor: "green",
         color: lightTheme.colors.textHighlight,
         paddingHorizontal: 8,
         paddingVertical: 4,

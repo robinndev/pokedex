@@ -6,7 +6,6 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 
 import image from "../../../assets/pokeballCard.png"
-import * as Animatable from 'react-native-animatable';
 
 export const CardPokemon = ({ itens }: any) => {
 
@@ -16,16 +15,28 @@ export const CardPokemon = ({ itens }: any) => {
         "water": "#6890F0",
         "bug": "#A8B820",
         "flying": "#A890F0",
-        "posion": " #A040A0",
+        "poison": " #A040A0",
         "phantom": "#705898",
         "normal": "#A8A878"
     }
 
-    const verifyColor = () => {
-        const types = pokemon?.types.length > 0 ? pokemon?.types[0].type.name : null
-        return typeColors[types || "normal"];
+    const typeColorsAtr = {
+        "grass": "#79C009",
+        "fire": "#F99930",
+        "poison": "#A040A0",
+        "water": "#6999F0",
+        "bug": "#A99820",
+        "flying": "#A890F0",
+        "phantom": "#705898",
+        "normal": "#A9A998"
     }
 
+    const verifyColor = () => {
+        const types = pokemon?.types.length > 0 ? pokemon?.types[0].type.name : null
+        console.log(types)
+
+        return typeColors[types || "normal"];
+    }
 
     interface ItypesPokemon {
         name: string
@@ -37,13 +48,12 @@ export const CardPokemon = ({ itens }: any) => {
     }
 
 
-
     interface IPokemonResponse {
         order: number,
         name: string,
         types: ItypePokemon[],
         id: number
-}
+    }
 
     const [pokemon, setPokemon] = useState<IPokemonResponse>()
     const [loading, setLoading] = useState(false)
@@ -53,27 +63,28 @@ export const CardPokemon = ({ itens }: any) => {
         setLoading(true)
         setOpacityValue(0.3) // definir opacidade inicial para o efeito
 
-            axios.get(`${itens.url}`)
-                .then((res) => {
-                    const response = res.data;
-                    const pokemonResponse = {
-                        order: response.order,
-                        name: response.name,
-                        types: response.types,
-                        id: response.id
-                    }
-                    setLoading(false)
-                    setPokemon(pokemonResponse)
-                }).catch((err) => {
-                    setLoading(false)
-                })
-    }, [])
+        axios.get(`${itens.url}`)
+            .then((res) => {
+                const response = res.data;
+                const pokemonResponse = {
+                    order: response.order,
+                    name: response.name,
+                    types: response.types,
+                    id: response.id
+                }
+                console.log(response.types)
+                setLoading(false)
+                setPokemon(pokemonResponse)
+            }).catch((err) => {
+                setLoading(false)
+            })
+    }, [itens])
 
     useEffect(() => {
         if (loading) {
             // definir a animação de opacidade enquanto carrega
             const interval = setInterval(() => {
-                setOpacityValue((prev) => prev === 0.25? 0.3 : 0.25)
+                setOpacityValue((prev) => prev === 0.25 ? 0.3 : 0.25)
             }, 500)
             return () => clearInterval(interval)
         }
@@ -82,8 +93,6 @@ export const CardPokemon = ({ itens }: any) => {
 
     if (loading) {
         return (
-
-
             <View style={[styles.container, { opacity: opacityValue, backgroundColor: "grey" }]}>
                 <View >
                     <Text style={styles.shiffterLoading}>ㅤㅤㅤ</Text>
@@ -96,7 +105,6 @@ export const CardPokemon = ({ itens }: any) => {
 
                 </View>
             </View>)
-
     }
 
     return (
@@ -108,10 +116,11 @@ export const CardPokemon = ({ itens }: any) => {
                 <View style={styles.atributes}>
                     {
                         pokemon?.types?.map(({ type, index }: any) => (
-                            <Text key={index} style={styles.tagAtributes}>{type.name}</Text>
+                            <Text key={Math.random()} style={[styles.tagAtributes, { backgroundColor: typeColorsAtr[type.name] }]}>{type.name}</Text>
                         ))
                     }
                 </View>
+
             </View>
 
             <ImageBackground source={image} resizeMode="cover" style={styles.containerImage}>

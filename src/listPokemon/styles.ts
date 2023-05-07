@@ -16,6 +16,17 @@ export const styles = StyleSheet.create({
 
     },
 
+    search: {
+        width: "100%",
+        borderWidth: 1,
+        borderColor: lightTheme.colors.border,
+        padding: 8,
+        marginTop: 16,
+        borderRadius: 4,
+        marginBottom: 40,
+        color: "black"
+    },
+
     describe: {
         color: lightTheme.colors.describe,
         fontSize: 16,
