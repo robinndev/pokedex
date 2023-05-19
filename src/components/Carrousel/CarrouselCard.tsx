@@ -7,7 +7,6 @@ import data from './data'
 
 const CarouselCards = () => {
     const isCarousel = useRef(null)
-
     const [index, setIndex] = useState(0)
 
     return (
